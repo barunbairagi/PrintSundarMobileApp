@@ -2,11 +2,11 @@ import React from 'react'
 import { SafeAreaView, Text, View, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import Logout from '../assets/logout.svg'
+import Icon from '../components/Icons'
 
 const DrawerScreen=()=>{
     const navigation=useNavigation()
-    const opts=["Logout"]
-    const optsComp=[Logout]
+    const opts=[{name:"Logout",component:Logout}]
 
     const handleTouch=(opt)=>{
         if(opt==='Logout'){
@@ -34,19 +34,14 @@ const DrawerScreen=()=>{
                 <ScrollView>
                     {opts.map((option, index) => (
                         <TouchableOpacity key={index} style={styles.component} onPress={()=>handleTouch(option)}>
-                            <Icon tag={optsComp[index]} dims={40} />
-                            <Text style={{color:'black',fontSize:25}}>{`\t\t${option}`}</Text>
+                            <Icon tag={option.component} dims={40} />
+                            <Text style={{color:'black',fontSize:25}}>{`\t\t${option.name}`}</Text>
                         </TouchableOpacity>
                     ))}
                 </ScrollView>
             </View>
         </SafeAreaView>
     )
-}
-
-const Icon=({tag , dims})=>{
-    const Tag=tag
-    return <Tag width={dims} height={dims} />
 }
 
 const styles=StyleSheet.create({
