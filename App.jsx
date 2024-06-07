@@ -10,18 +10,22 @@ import Connect from './src/views/Connect'
 import Login from './src/views/Login'
 import Register from './src/views/Register'
 import DrawerScreen from './src/views/DrawerScreen'
+import Checkout from './src/views/Checkout'
+import Summary from './src/views/Summary'
 
 const Stack = createStackNavigator()
 
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Dashboard" screenOptions={({ route, navigation }) => ({...TransitionPresets.SlideFromRightIOS,})} options={{headerShown: false}}>
+      <Stack.Navigator initialRouteName="Login" screenOptions={({ route, navigation }) => ({...TransitionPresets.SlideFromRightIOS,})} options={{headerShown: false}}>
         <Stack.Screen name="Dashboard" component={Dashboard} options={{headerShown:false}}/>
         <Stack.Screen name="Home" component={Home} options={{headerShown:false}}/>
         <Stack.Screen name="Cart" component={Cart} options={{headerShown:false}}/>
         <Stack.Screen name="Account" component={Account} options={{headerShown:false}}/>
         <Stack.Screen name="Connect" component={Connect} options={{headerShown:false}}/>
+        <Stack.Screen name="Checkout" component={Checkout} options={{headerShown:false}}/>
+        <Stack.Screen name="Summary" component={Summary} options={{headerShown:false}}/>
         
         <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
         <Stack.Screen name="Register" component={Register} options={{headerShown:false}}/>

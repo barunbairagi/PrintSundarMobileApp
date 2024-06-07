@@ -29,18 +29,55 @@ const Dashboard=()=>{
         require(`${img_path}scroll_images/Golden_Printed_VC.png`),
     ]
     const imagesList=[
-        {id:1,img:require(`${img_path}Mobile/3DEffect.1c883bf5e1a37611d8b0.png`)},
-        {id:2,img:require(`${img_path}Mobile/Magnetic.1426d7a6762e916a1d46.png`)},
-        {id:3,img:require(`${img_path}Mobile/MatteVC.2cc49c79264313166a21.png`)},
-        {id:4,img:require(`${img_path}Mobile/NonTearable.b7a367958ddf29a73d5a.png`)},
-        {id:5,img:require(`${img_path}Mobile/photographic.7c7e7af6c8960ad5be73.png`)},
-        {id:6,img:require(`${img_path}Mobile/QRCoadPremiuglossy.5441e53677c944ab2062.png`)},
-        {id:7,img:require(`${img_path}Mobile/SpecialcolourVC.7955b954af35b1675652.png`)},
-        {id:8,img:require(`${img_path}Mobile/Spot_UV.26f5e47494c35e6ca9f2.png`)},
-        {id:9,img:require(`${img_path}Mobile/SpotUVspecialVisitingCard.151aaf4f239a1e7966a1.png`)},
-        {id:10,img:require(`${img_path}Mobile/Standard.a3e56c399e352eb8397a.png`)},
-        {id:11,img:require(`${img_path}Mobile/TransparentVC.28e77e0ff7f56d05af96.png`)},
-        {id:12,img:require(`${img_path}Mobile/UniqueShape.fa40d772e42d8d340c98.png`)},
+        {
+            img:require(`${img_path}Mobile/Standard.a3e56c399e352eb8397a.png`),
+            img2:require(`${img_path}scroll_images/Standard_Glossy_VC.png`),
+            name:'Standard Visiting Card'
+        },{
+            img:require(`${img_path}Mobile/Spot_UV.26f5e47494c35e6ca9f2.png`),
+            img2:require(`${img_path}scroll_images/SpotUV_VC.png`),
+            name:'Spot UV Card'
+        },{
+            img:require(`${img_path}Mobile/QRCoadPremiuglossy.5441e53677c944ab2062.png`),
+            img2:require(`${img_path}scroll_images/VC_OrderSubmitPage.png`),
+            name:'QR Code Visiting Card'
+        },{
+            img:require(`${img_path}Mobile/SpotUVspecialVisitingCard.151aaf4f239a1e7966a1.png`),
+            img2:require(`${img_path}scroll_images/Velvet_Touch_VC.png`),
+            name:'Velvet Touch Card'
+        },{
+            img:require(`${img_path}Mobile/TransparentVC.28e77e0ff7f56d05af96.png`),
+            img2:require(`${img_path}scroll_images/Transparent_VC.png`),
+            name:'Transparent Visiting Card'
+        },{
+            img:require(`${img_path}Mobile/NonTearable.b7a367958ddf29a73d5a.png`),
+            img2:require(`${img_path}scroll_images/Non_Tearable_VC.png`),
+            name:'Non-Tearable Visiting Card'
+        },{
+            img:require(`${img_path}Mobile/MatteVC.2cc49c79264313166a21.png`),
+            img2:require(`${img_path}scroll_images/Matte_Finished_VC.png`),
+            name:'Matte Visiting Card'
+        },{
+            img:require(`${img_path}Mobile/SpecialcolourVC.7955b954af35b1675652.png`),
+            img2:require(`${img_path}scroll_images/Golden_Printed_VC.png`),
+            name:'Special Colored Card'
+        },{
+            img:require(`${img_path}Mobile/Magnetic.1426d7a6762e916a1d46.png`),
+            img2:require(`${img_path}scroll_images/Magnetic_VC.png`),
+            name:'Magnetic Card'
+        },{
+            img:require(`${img_path}Mobile/3DEffect.1c883bf5e1a37611d8b0.png`),
+            img2:require(`${img_path}scroll_images/Golden_Printed_VC.png`),//not there
+            name:'3D Effect Card'
+        },{
+            img:require(`${img_path}Mobile/UniqueShape.fa40d772e42d8d340c98.png`),
+            img2:require(`${img_path}scroll_images/UniqueShape_VC.png`),
+            name:'Unique Shape Card'
+        },{
+            img:require(`${img_path}Mobile/photographic.7c7e7af6c8960ad5be73.png`),
+            img2:require(`${img_path}scroll_images/photographic_VC.png`),
+            name:'Photo Graphic Card'
+        },
     ]
     const icons=[
         {name:'Home',component:Home},{name:'Cart',component:Cart},
@@ -83,7 +120,8 @@ const Dashboard=()=>{
                 ))}
             </ScrollView></View>
             <FlatList data={imagesList} style={styles.list}
-                renderItem={renderItem} keyExtractor={(item) => item.id} 
+                renderItem={({ item }) => renderItem({ item, navigation })} 
+                keyExtractor={(item) => item.img} 
                 numColumns={2}
             />
             <View style={styles.bottom}>
@@ -96,9 +134,10 @@ const Dashboard=()=>{
         </SafeAreaView>
     )
 }
-const renderItem=({item})=>{
+const renderItem=({item , navigation})=>{
     const handleBuy=()=>{
         console.log("You are buyng this item")
+        navigation.navigate("Checkout",{img:item.img2 , name:item.name})
     }
     const handleCart=()=>{
         console.log("You are adding this item to cart")
@@ -106,8 +145,12 @@ const renderItem=({item})=>{
     return(
         <View style={styles.bodyComp}>
             <Image source={item.img} style={styles.mainImg}/>
+            <Text style={{backgroundColor:'white',color:'black',fontSize:16,fontWeight:'bold',
+            textAlign:'center',flexWrap:'wrap',paddingVertical:5}}>
+                {item.name}
+            </Text>
             <TouchableOpacity style={styles.buy} onPress={handleBuy}>
-                <Text style={styles.buy_text}>Buy Now</Text>
+                <Text style={[styles.buy_text,{color:'white'}]}>Buy Now</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.buy,{backgroundColor:'lightgrey'}]} onPress={handleCart}>
                 <Text style={styles.buy_text}>Add to Cart</Text>
@@ -150,9 +193,11 @@ const styles=StyleSheet.create({
         flex:0.8,
         marginVertical:8
     },bodyComp:{
-        width:(width-10)/2.09,maxHeight:(width-10)/1.4,overflow:'hidden',
+        width:(width-10)/2.09,
+        // maxHeight:(width)/1.4,
+        overflow:'hidden',
         borderRadius:10,marginHorizontal:5,marginBottom:10,
-        // backgroundColor:'blue',
+        backgroundColor:'lightgrey',
         flexDirection:'column',justifyContent:'flex-start'//,alignItems:'center'
     },mainImg:{
         width:(width-10)/2.09,
@@ -163,7 +208,7 @@ const styles=StyleSheet.create({
         // height:'14%',
         padding:5,
         justifyContent:'center',alignItems:'center',
-        backgroundColor:'white',
+        backgroundColor:'black',
         // borderRadius:10
     },buy_text:{
         textAlign:'center',textAlignVertical:'center',color:'black',
